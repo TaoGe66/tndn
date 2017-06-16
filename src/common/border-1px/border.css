@@ -1,0 +1,45 @@
+.border-1px_bottom,.border-1px_top,.border-1px_right,.border-1px_right_logo,.border-1px_right_60::after,.border-1px_right_30::after{
+  position: relative;
+}
+.border-1px_right::after,.border-1px_right_logo::after,.border-1px_top::before,.border-1px_bottom::after,.border-1px_right_60::after,.border-1px_right_30::after{
+  display: block;
+  position: absolute;
+  border: 1px solid #e6e6e6;
+  content: ' '
+}
+.border-1px_top::before{
+  width: 100%;
+  left: -2px;
+  top: -1px;
+}
+.border-1px_bottom::after{
+  width: 100%;
+  left: -2px;
+  bottom: -1px;
+}
+/*********************right***********************/
+.border-1px_right::after{
+  height: 15px;
+  top: 0;
+  bottom: 0;
+}
+.border-1px_right_60::after{
+  height: 20px;
+  top: 10px;
+  bottom: 0;
+}
+.border-1px_right_30::after{
+  height: 30px;
+  left: 115px;
+  top: 0;
+  bottom: 0;
+}
+.border-1px_right_logo::after{
+  height: 68px;
+  top: 0;
+  left: 68px;
+}
+
+
+
+
