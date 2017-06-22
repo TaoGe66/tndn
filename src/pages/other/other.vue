@@ -25,7 +25,7 @@
           <div class="coupons_width">
             <router-link :to="'/index/commodityDetail'+item.id">
               <div class="coupons-logo">
-                <img width="60" height="60" src="https://pan.baidu.com/box-static/disk-theme/theme/white/img/logo.png?t=1470151327639" alt="">
+                <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="">
               </div>
               <div class="coupons-commodity-Introduction">
                 <p>{{item.chn_title}}</p>

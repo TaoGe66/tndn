@@ -21,6 +21,7 @@ import modifyNewaddress from '../pages/modifyNnewaddress/modifyNewaddress'
 import orderStatus from '../pages/order-status/order-status'
 import payResult from '../pages/pay-result/pay-result'
 import selectAddress from '../pages/SelectAddress/SelectAddress'
+import login from '../pages/login/login'
 
 Vue.use(Router);
 
@@ -64,7 +65,24 @@ export default new Router({
       path: '/shoppingCart',
       name: 'shoppingCart',
       component: shoppingCart,
-      meta:{requireAuth: true}
+      beforeEnter:(to,form,next)=>{
+        if(!localStorage.getItem("jsonObj")){
+         // 第一次进入项目
+         next('/login');
+          alert("没有，去登陆");
+         return false
+         } else {
+         // 之前有获取过授权
+         next();
+          alert('有，不用登陆');
+         return false;
+        }
+      }
+    },
+    {
+      path:'/login',
+      name: 'login',
+      component: login
     },
     {
       path: '/pay',

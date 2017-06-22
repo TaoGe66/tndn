@@ -55,6 +55,7 @@
         </div>
 
       </div>
+      <div class="height44"></div>
 
       <div class="address-newAddress">
         <router-link to="/me/address/newAddress">添加新地址</router-link>
@@ -66,6 +67,9 @@
   @import "../../common/border-1px/border.css";
   @import "../../common/border-1px/media-border.css";
 
+  .height44{
+    height: 44px;
+  }
   /*addressDetail*/
   .address-detail-component{
     background: white;
@@ -224,7 +228,7 @@
       data(){
         return {
           infoDatas:[],
-          hidden:false,
+          hidden:false
         }
       },
       mounted(){

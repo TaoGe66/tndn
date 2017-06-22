@@ -23,7 +23,7 @@
               </div>
             </div>
             <div class="shopCartCoupon-logo">
-              <img width="60" height="60" src="./timg1@2x.png" alt="">
+              <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="">
             </div>
             <div class="shopCartCoupon-Introduction">
               <p>{{item.chn_title}}</p>
@@ -58,6 +58,7 @@
     </div>
     <div class="height-50"></div>
     <v-tab></v-tab>
+    <!--<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa98e6fa0a6d50100&redirect_uri=http://www.tndnchina.cn/api/wechatRedirect&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect">点我</a>-->
   </div>
 </template>
 
@@ -65,6 +66,7 @@
   import { CellSwipe } from 'mint-ui';
   import 'mint-ui/lib/cell-swipe/style.css'
   import mainNav from '../../components/commodityList/main-nav/main-nav.vue'
+  import Bus from '../../assets/bus'
 
   export default{
     components:{
@@ -92,7 +94,7 @@
           {params:{idx_user:1}}
         ).then((res)=>{
           _this.cartDatas = res.data;
-          console.log(_this.cartDatas)
+//          console.log(_this.cartDatas)
         },(err)=>{
           console.log(err);
         });
@@ -160,9 +162,17 @@
 //            console.log(item.quantity);
             formData.append('idx_cart', item.id);
             formData.append('quantity', item.quantity);
+            _this.mko(item)
           }
         });
-        _this.$http.put('/api/updateCartItem', formData)
+        _this.$http.put('/api/updateCartItem', formData);
+
+      },
+
+      //兄弟传递数据
+      mko(item){
+//        console.log(item)
+        Bus.$emit('getTarget', item);
       },
 
       //点击单选

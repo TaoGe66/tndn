@@ -31,16 +31,7 @@
     </div>
 
     <!--特惠周-->
-    <div class="index-favorable border-1px_bottom border-1px_top">
-      <!--<router-link to="/index/storePage">
-        <div class="index-favorable-left-content">
-          <span>约惠首尔</span><span>快去逛逛</span><img width="10" height="8" src="./gengduo@2x.png" alt="">
-          <p>进店优惠享不停</p>
-        </div>
-        <div class="index-favorable-right-content">
-          <img width="91" height="58" src="./购物袋@2x.png" alt="">
-        </div>
-      </router-link>-->
+    <div class="index-favorable border-1px_top">
       <img src="./tu@2x.png" alt="">
     </div>
 
@@ -53,11 +44,11 @@
         <router-link :to="'/index/commodityDetail'+item.id">
           <div class="coupons coupons-components border-1px_bottom clear">
             <div class="coupons-logo">
-              <img width="60" height="60" src="./timg-@2x.png" alt="">
+              <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="">
             </div>
             <div class="coupons-commodity-Introduction">
               <p>{{item.chn_title}}</p>
-              <p>规格:<span>화장품1</span></p>
+              <p><span>{{item.kor_title}}</span></p>
               <p>￥{{item.price}}</p>
             </div>
           </div>

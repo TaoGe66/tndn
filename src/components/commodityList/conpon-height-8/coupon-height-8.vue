@@ -10,10 +10,9 @@
         <p><span>烤肉</span></p>
       </div>
       <div class="coupon-right-status">
-        <!--<p>已完成</p>-->
-        <!--<p v-if="noAStock()">{{item.state}}</p>-->
         <p v-show="item.state==1">已完成</p>
         <p v-show="item.state==2">待支付</p>
+        <p v-show="item.state==3">已取消</p>
         <router-link to="/Order/orderStatus" v-show="item.state==1">
           <button>再次购买</button>
         </router-link>

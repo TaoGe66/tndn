@@ -13,12 +13,12 @@
 
     <div class="pay-order border-1px_bottom">
       <div class="pay-order-logo">
-        <img width="50" height="50" src="./tupian@2x.png" alt="">
+        <img width="50" height="50" :src="'http://www.tndnchina.cn/api/getImage?idx='+infoOrder.idx_image" alt="">
       </div>
       <div class="pay-order-content">
-        <h1>￥40.0</h1>
+        <h1>￥{{infoOrder.price}}</h1>
         <p>
-          <span>羲和雅苑烤鸭坊</span><span>X1</span>
+          <span>{{infoOrder.chn_title}}</span><span>X{{infoOrder.quantity}}</span>
         </p>
       </div>
     </div>
@@ -66,10 +66,12 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import Bus from '../../assets/bus'
 
     export default{
       data(){
         return{
+//          info:[],
           infoAddress:[],
           infoOrder:[],
           total_price:'40',
@@ -82,10 +84,18 @@
           return this.infoAddress.slice(0,1);
         })
       },
+      created(){
+       //接受_兄弟组件数据
+       var _this = this;
+       Bus.$on('getTarget',function(item){
+         _this.infoOrder = item;
+         console.log(_this.infoOrder)
+       });
+      },
       mounted(){
         this.$nextTick(function () {
           this.getAddressData();
-          this.getOrderData()
+//          this.getOrderData()
         })
       },
       methods:{
@@ -101,7 +111,7 @@
           })
         },
         //获取订单数据
-        getOrderData(){
+        /*getOrderData(){
           let _this = this;
           _this.$http.get('/api/getUserAddressList',
             {params: {idx_user:"1"}}
@@ -110,7 +120,7 @@
           },(err)=>{
             console.log(err);
           })
-        },
+        },*/
 
         //提交订单
         submitOrder(){
@@ -171,6 +181,11 @@
   }
   .pay-order-logo,.pay-order-content{
     float: left;
+  }
+  .pay-order-logo>img{
+    display: inline-block;
+    border-radius: 50%;
+    border: 1px solid #e6e6e6;
   }
   .pay-order-content{
     color: #505050;
