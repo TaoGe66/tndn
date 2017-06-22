@@ -35,43 +35,6 @@
 
         }
       }
-
-
-
-
-
-        /*************************************************************/
-        /*if(localStorage.getItem("userId")){
-          this.login();
-          //如果sessionStorage中有userid,执行login
-        } else if(this.$store.state.code){
-          //如果只是有code
-          let _self = this;
-          //发请求，用code换token
-          this.$axios({
-              method: 'post',
-              url: this.baseURL + "/login",
-              data: {
-                code: this.$store.state.code
-              }
-            })
-            .then(function(response){
-              //token和登录状态先保存在sessionStorage里
-//              sessionStorage.setItem("token",response.data.token);
-              sessionStorage.setItem("userId",response.data.idx_user);
-            })
-            .catch(function(error){
-              console.log(error);
-            })
-        }
-        else{
-          let self=this;
-          if (self && !self._isDestroyed) {
-            //如果失败了还是弹二维码
-            window.location = self.url;
-          }
-        }
-      }*/
     }
 </script>
 
