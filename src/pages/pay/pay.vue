@@ -56,11 +56,11 @@
       </div>
     </div>
     <!--<router-link to="/pay/payResult">-->
-    <router-link to="/pay">
-      <button class="pay-btn" @click="submitOrder()">
+    <!--<router-link to="/pay">-->
+      <a class="pay-btn" @click="submitOrder()" href="http://www.tndntravel.com/pgtndnwechat/complete">
         <span>确认支付</span><span>￥40.0</span>
-      </button>
-    </router-link>
+      </a>
+    <!--</router-link>-->
 
   </div>
 </template>
@@ -74,9 +74,10 @@
 //          info:[],
           infoAddress:[],
           infoOrder:[],
-          total_price:'40',
+          total_price:'40.00',
           idx_goods:'26',
-          quantity:'1'
+          quantity:'1',
+          chn_title:'test'
         }
       },
       computed:{
@@ -85,6 +86,7 @@
         })
       },
       created(){
+        this.url = 'http://www.tndntravel.com/pgtndnwechat/complete';
        //接受_兄弟组件数据
        var _this = this;
        Bus.$on('getTarget',function(item){
@@ -126,13 +128,44 @@
         submitOrder(){
           let _this = this;
           var formData = new FormData();
-          formData.append('idx_user', 1);
-          formData.append('total_price', this.total_price);
+          formData.append('idx_user', 2);
           formData.append('idx_goods', this.idx_goods);
           formData.append('quantity', this.quantity);
-          _this.$http.post('/api/setOrder', formData
-          );
+          formData.append('total_price', this.total_price);
+          formData.append('chn_title', this.chn_title);
+          formData.append('openid', "opX9IwdgHVHJ_WAF7VKVTx5V-f30");
+          _this.$http.post('/pay/wechatSign', formData);
+          this.callpay(data);
+        },
+
+        callpay(data){
+          if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) { document.addEventListener('WeixinJSBridgeReady', jsApiCall, false); } else if (document.attachEvent) {
+              document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+              document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+          } else { jsApiCall(data); }
+        },
+
+        jsApiCall(data){
+          WeixinJSBridge.invoke('getBrandWCPayRequest', {
+            "appId": data.wechatpaySign.appId,
+            "timeStamp": data.wechatpaySign.timeStamp,
+            "nonceStr": data.wechatpaySign.nonceStr,
+            "package": data.wechatpaySign.package,
+            "signType": data.wechatpaySign.signType,
+            "paySign": data.wechatpaySign.prepaySign
+          }, function(res) {
+            WeixinJSBridge.log(res.err_msg);
+            if (res.err_msg == "get_brand_wcpay_request:ok") {
+              window.location = this.url;
+            }
+            console.log(res.err_code);
+            console.log(res.err_desc);
+            console.log(res.err_msg);
+          });
         }
+
 
 //          console.log(this.total_price);
 //          console.log(this.idx_goods);
