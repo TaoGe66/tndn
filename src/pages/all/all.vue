@@ -1,5 +1,6 @@
 <template>
   <div class="all-page">
+    <!--订单title-->
     <div class="index-nav">
       <div class="shopping-page-router-order-me">
         <router-link to="/me">
@@ -11,19 +12,19 @@
       </div>
     </div>
     <div class="height-40"></div>
-    <div class="margin-49">
 
+    <!--订单list-->
     <div class="order-status" v-for="item in orderData">
       <div class="orderStatus-title border-1px_bottom">
-        <span>2017-5-13 10:15</span>
-        <!--<p v-show="item.state==1">已完成</p>-->
-        <!--<p v-show="item.state==2">待支付</p>-->
-        <!--<p v-show="item.state==3">已取消</p>-->
-        <p>已完成</p>
+        <span>{{item.insert_date}}</span>
+        <p v-show="item.pay_status==1">已完成</p>
+        <p v-show="item.pay_status==0">待支付</p>
+        <p v-show="item.pay_status==2">已取消</p>
+        <!--<p>已完成</p>-->
       </div>
-      <div class="orderStatus-content border-1px_bottom">
+      <div class="orderStatus-content border-1px_bottom" v-for="item in orderData.data">
         <div class="content-logo">
-          <img width="60" height="60" src="./timg-@2x.png" alt="">
+          <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="">
         </div>
         <div class="content-info">
           <p>黄金牧场<span>W8000</span></p>
@@ -36,13 +37,21 @@
         <!--</div>-->
       </div>
       <div class="orderStatus-footer border-1px_bottom">
-        <p class="orderStatus-footer-price"><span>w</span><span>8000</span></p>
+        <p class="orderStatus-footer-price"><span>w</span><span>{{item.total_price}}</span></p>
         <p>合计(含运费):</p>
         <p>共<span>2</span>件商品</p>
       </div>
+      <div class="height8 border-1px_bottom"></div>
     </div>
 
+    <!--没有订单show-->
+    <div class="noOrder" v-show="noOrderShow">
+      <div class="noOrderImg">
+        <img width="90" height="93" src="./wudingdan@2x.png" alt="">
+      </div>
+      <p>您还没有相关订单</p>
     </div>
+
   </div>
 </template>
 
@@ -130,65 +139,23 @@
     margin: 0 15px 0 2px;
   }
 
-
-  /*.coupons-components{
-    background: white;
-    float: left;
-    margin-bottom: 8px;
-  }
-  .coupons{
-    position: relative;
+  .noOrder{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 36%;
     width: 100%;
-    !*height: 80px;*!
   }
-  .coupons-logo,.coupons-Introduction{
-    float: left;
+  .noOrderImg>img{
+    display: block;
+    padding-bottom: 35px;
+    margin: auto;
   }
-  .coupon-right-status{
-    position: relative;
-  }
-  .coupon-right-status>p{
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    color: #f96400;
-    font-size: 11px;
-  }
-  .coupon-right-status>a>button{
-    position: absolute;
-    right: 15px;
-    top: 50px;
-    width: 68px;
-    height: 19px;
-    color: #787878;
-    background: white;
-    border: 1px solid #c8c8c8;
-    border-radius: 3px;
-    font-size: 11px;
-  }
-  .coupons-logo{
-    padding: 10px 15px;
-  }
-  .coupons-Introduction{
-    padding: 14px 0;
-    font-size:12px;
-    color: #787878;
-  }
-  .coupons-Introduction>p:first-child{
-    font-size: 13px;
-    color: #505050;
-  }
-  .coupons-Introduction>p:nth-child(2){
-    padding: 6px 0 12px;
-  }
-  .coupons-Introduction>p:nth-child(2)>span{
-    color: #f9bb00;
-    padding-left: 15px;
-  }
-  .coupons-Introduction>p:nth-child(3){
-    font-size: 11px;
+  .noOrder>p{
+    text-align: center;
     color: #b4b4b4;
-  }*/
+    font-size: 16px;
+  }
 
 </style>
 
@@ -198,7 +165,8 @@
     data(){
       return{
         list:[{state:1}],
-        orderData:[]
+        orderData:[],
+        noOrderShow:true
       }
     },
     mounted(){
@@ -213,7 +181,12 @@
           {params:{idx_user:1}}
         ).then((res)=>{
           _this.orderData = res.data;
-          console.log(_this.orderData)
+          console.log(_this.orderData);
+          if(_this.orderData.length===0){
+            this.noOrderShow = true;
+          }else {
+            this.noOrderShow = !this.noOrderShow;
+          }
         },(err)=>{
           console.log(err);
         });

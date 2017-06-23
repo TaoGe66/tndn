@@ -66,6 +66,7 @@ export default new Router({
       name: 'shoppingCart',
       component: shoppingCart,
       beforeEnter:(to,form,next)=>{
+        console.log(localStorage.getItem("jsonObj"));
         if(!localStorage.getItem("jsonObj")){
          // 第一次进入项目
          next('/login');
