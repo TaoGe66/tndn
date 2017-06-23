@@ -57,9 +57,9 @@
     </div>
     <!--<router-link to="/pay/payResult">-->
     <!--<router-link to="/pay">-->
-      <a class="pay-btn" @click="submitOrder()" href="http://www.tndntravel.com/pgtndnwechat/complete">
+      <button class="pay-btn" @click="submitOrder()">
         <span>确认支付</span><span>￥40.0</span>
-      </a>
+      </button>
     <!--</router-link>-->
 
   </div>
@@ -74,6 +74,7 @@
 //          info:[],
           infoAddress:[],
           infoOrder:[],
+          weChatData:[],
           total_price:'40.00',
           idx_goods:'26',
           quantity:'1',
@@ -86,7 +87,8 @@
         })
       },
       created(){
-        this.url = 'http://www.tndntravel.com/pgtndnwechat/complete';
+        this.okUrl = 'http://www.tndnchina.cn/#/pay/payResult';
+        this.failUrl = 'http://www.tndnchina.cn/#/pay/payResult';
        //接受_兄弟组件数据
        var _this = this;
        Bus.$on('getTarget',function(item){
@@ -134,8 +136,14 @@
           formData.append('total_price', this.total_price);
           formData.append('chn_title', this.chn_title);
           formData.append('openid', "opX9IwdgHVHJ_WAF7VKVTx5V-f30");
-          _this.$http.post('/pay/wechatSign', formData);
-          this.callpay(data);
+          _this.$http.post('/pay/wechatSign', formData)
+            .then((res)=>{
+              _this.weChatData = res.data;
+              console.log(_this.data)
+            },(err)=>{
+              console.log(err);
+            });
+          this.callpay(_this.weChatData);
         },
 
         callpay(data){
@@ -158,7 +166,9 @@
           }, function(res) {
             WeixinJSBridge.log(res.err_msg);
             if (res.err_msg == "get_brand_wcpay_request:ok") {
-              window.location = this.url;
+              window.location = this.okUrl;
+            }else {
+              window.location = this.failUrl;
             }
             console.log(res.err_code);
             console.log(res.err_desc);

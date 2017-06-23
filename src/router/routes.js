@@ -20,6 +20,7 @@ import newAddress from '../pages/newaddress/newaddress'
 import modifyNewaddress from '../pages/modifyNnewaddress/modifyNewaddress'
 import orderStatus from '../pages/order-status/order-status'
 import payResult from '../pages/pay-result/pay-result'
+import payFail from '../pages/pay-fail/pay-fail'
 import selectAddress from '../pages/SelectAddress/SelectAddress'
 import login from '../pages/login/login'
 
@@ -94,6 +95,11 @@ export default new Router({
       path: '/pay/payResult',
       name: 'pay/payResult',
       component: payResult
+    },
+    {
+      path: '/pay/payFail',
+      name: 'pay/payFail',
+      component: payFail
     },
     {
       path: '/Order/orderStatus',

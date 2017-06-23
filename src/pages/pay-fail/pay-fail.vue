@@ -4,30 +4,31 @@
       <div class="pay-title">
         <span>支付结果</span>
       </div>
-        <p class="result-router-pay" onclick="window.history.go(-1)">完成</p>
+      <p class="result-router-pay" onclick="window.history.go(-1)">完成</p>
     </div>
 
     <div class="result-yes border-1px_bottom">
-      <img width="60" height="60" src="./duigou@2x.png" alt="">
-      <p>支付成功</p>
+      <img width="60" height="60" src="./gantan@2x.png" alt="">
+      <p>支付失败</p>
     </div>
     <div class="height-8"></div>
 
-    <p class="border-1px_bottom pay-price"><span>实付款 :</span><span>￥8888.00</span></p>
+    <!--<p class="border-1px_bottom pay-price"><span>实付款 :</span><span>￥8888.00</span></p>-->
+    <p class="border-1px_bottom pay-price"><span>请重新支付</span></p>
 
-    <div class="border-1px_bottom">
+    <!--<div class="border-1px_bottom">
       <div class="pay-result-user-info">
         <p>收货人 :<span>郭飞其</span></p>
         <p>手机号 :<span>12345678912</span></p>
         <p>收货地址 :<span>首尔市明洞街XX号</span></p>
         <router-link to="/all" class="payColor1"><span>查看订单</span></router-link><router-link to="/index" class="payColor2"><span>回到首页</span></router-link>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-    export default{}
+  export default{}
 </script>
 
 <style scoped>
@@ -62,7 +63,8 @@
   }
   .pay-price>span:last-child{
     color: #f96400;
-    padding-left: 13px;
+    /*padding-left: 13px;*/
+    text-align: center;
   }
   .pay-result-user-info{
     background: white;
