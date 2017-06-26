@@ -68,7 +68,7 @@ export default new Router({
       component: shoppingCart,
       beforeEnter:(to,form,next)=>{
         // alert(localStorage.getItem("jsonObj"));
-        if(!localStorage.getItem("jsonObj")){
+        if(!localStorage.getItem("data")){
          // 第一次进入项目
          next('/login');
           alert("没有，去登陆");

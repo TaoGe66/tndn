@@ -139,7 +139,7 @@
           _this.$http.post('/pay/wechatSign', formData)
             .then((res)=>{
               _this.weChatData = res.data;
-              console.log(_this.data);
+              console.log(_this.weChatData);
               this.callpay(_this.weChatData);
             },(err)=>{
               console.log(err);
