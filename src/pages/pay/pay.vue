@@ -88,7 +88,7 @@
       },
       created(){
         this.okUrl = 'http://www.tndnchina.cn/#/pay/payResult';
-        this.failUrl = 'http://www.tndnchina.cn/#/pay/payResult';
+        this.failUrl = 'http://www.tndnchina.cn/#/pay/payFail';
        //接受_兄弟组件数据
        var _this = this;
        Bus.$on('getTarget',function(item){
@@ -139,20 +139,20 @@
           _this.$http.post('/pay/wechatSign', formData)
             .then((res)=>{
               _this.weChatData = res.data;
-              console.log(_this.data)
+              console.log(_this.data);
+              this.callpay(_this.weChatData);
             },(err)=>{
               console.log(err);
             });
-          this.callpay(_this.weChatData);
         },
-
         callpay(data){
+        alert(typeof WeixinJSBridge == "undefined");
           if (typeof WeixinJSBridge == "undefined") {
             if (document.addEventListener) { document.addEventListener('WeixinJSBridgeReady', jsApiCall, false); } else if (document.attachEvent) {
               document.attachEvent('WeixinJSBridgeReady', jsApiCall);
               document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
             }
-          } else { jsApiCall(data); }
+          } else { this.jsApiCall(data); }
         },
 
         jsApiCall(data){
@@ -165,6 +165,7 @@
             "paySign": data.wechatpaySign.prepaySign
           }, function(res) {
             WeixinJSBridge.log(res.err_msg);
+            alert(res.err_msg);
             if (res.err_msg == "get_brand_wcpay_request:ok") {
               window.location = this.okUrl;
             }else {

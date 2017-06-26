@@ -13,17 +13,16 @@
     </div>
     <div class="height-8"></div>
 
-    <!--<p class="border-1px_bottom pay-price"><span>实付款 :</span><span>￥8888.00</span></p>-->
-    <p class="border-1px_bottom pay-price"><span>请重新支付</span></p>
+    <!--<p class="border-1px_bottom pay-price"><span>订单信息</span></p>-->
+    <!--<p class="border-1px_bottom pay-price"><span>请重新支付</span></p>-->
 
-    <!--<div class="border-1px_bottom">
+    <div class="border-1px_bottom">
       <div class="pay-result-user-info">
-        <p>收货人 :<span>郭飞其</span></p>
-        <p>手机号 :<span>12345678912</span></p>
-        <p>收货地址 :<span>首尔市明洞街XX号</span></p>
-        <router-link to="/all" class="payColor1"><span>查看订单</span></router-link><router-link to="/index" class="payColor2"><span>回到首页</span></router-link>
+        <p class="info_content_title">订单信息</p>
+        <p class="info_content">该订单会为你保留12个小时(从下单之日算起)，12小时之后如果还未付款，系统将自动取消订单</p>
+        <router-link to="/pay" class="payColor1"><span>重新支付</span></router-link><router-link to="/all" class="payColor2"><span>查看订单</span></router-link>
       </div>
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -55,29 +54,23 @@
   .result-yes>p{
     margin-top: 11px;
   }
-  .pay-price{
-    text-align: center;
-    padding: 21px;
-    background: white;
-    color: #505050;
-  }
-  .pay-price>span:last-child{
-    color: #f96400;
-    /*padding-left: 13px;*/
-    text-align: center;
-  }
   .pay-result-user-info{
     background: white;
     padding: 17px 0 23px 15px;
-    font-size: 14px;
+    font-size: 12px;
     color: #787878;
     margin: 0 auto;
   }
   .pay-result-user-info>p{
     padding-bottom: 10px;
   }
-  .pay-result-user-info>p>span{
-    padding-left: 10px;
+  .info_content_title{
+    font-size: 13px;
+    color: #505050;
+  }
+  .info_content{
+    line-height: 18px;
+    padding-right: 15px;
   }
   .pay-result-user-info>a{
     display: inline-block;
