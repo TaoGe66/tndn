@@ -25,7 +25,8 @@
           <div class="coupons_width">
             <router-link :to="'/index/commodityDetail'+item.id">
               <div class="coupons-logo">
-                <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="">
+                <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="" v-show="item.idx_image!==null">
+                <img width="60" height="60" src="./no404.png" alt="" v-show="item.idx_image==null">
               </div>
               <div class="coupons-commodity-Introduction">
                 <p>{{item.chn_title}}</p>
@@ -155,16 +156,13 @@
         totalQuantity:0,
         isShow:true,
         commodityDatas:[],
-        cartDatas:[],
-//        goodsImage:[]
-//        imgDatas:[]
+        cartDatas:[]
       }
     },
     mounted(){
       this.$nextTick(function () {
         this.getData();
         this.getCartDatas();
-//        this.getImageDatas();
       })
     },
     methods:{
@@ -181,17 +179,6 @@
         });
       },
 
-      /*getImageDatas(){
-        let _this = this;
-        _this.$http.get('/api/getImage',
-          {params:{idx_image:22}}
-        ).then((res)=>{
-          _this.goodsImage = res.data;
-          console.log(_this.goodsImage)
-        },(err)=>{
-          console.log(err);
-        })
-      },*/
       //获取购物车数据
       getCartDatas(){
         let _this = this;
@@ -215,12 +202,6 @@
         _this.$http.post('/api/setCartItem',formData);
         this.showQuantity();
       }),
-
-//      //子组件传值给父组件
-//      allTotalQuantity: (function () {
-//        this.totalQuantity += 1;
-//        this.showQuantity();
-//      }),
 
 //      显示隐藏购物车数量红标
       showQuantity(){

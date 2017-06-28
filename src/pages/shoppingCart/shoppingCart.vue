@@ -23,7 +23,8 @@
               </div>
             </div>
             <div class="shopCartCoupon-logo">
-              <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="">
+              <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="" v-show="item.idx_image!==null">
+              <img width="60" height="60" src="./no404.png" alt="" v-show="item.idx_image==null">
             </div>
             <div class="shopCartCoupon-Introduction">
               <p>{{item.chn_title}}</p>
@@ -48,7 +49,7 @@
           </div>
         </div>
         <div class="router-pay" @click="shopSubmit()">
-          <router-link to="/pay">去结算({{totalPayQuantity}})</router-link>
+          <router-link to="/payShopping">去结算({{totalPayQuantity}})</router-link>
         </div>
         <router-view></router-view>
         <div class="shopping-btn">
@@ -78,7 +79,8 @@
         totalMoney:0,
         cartDatas:[],
         allSelectBtn:false,
-        cartDatas_id:''
+        cartDatas_id:'',
+//        shoppingData:{}
       }
     },
     mounted(){
@@ -154,25 +156,26 @@
       //提交结算
       shopSubmit(){
         let _this = this;
-//        console.log(localStorage);
         var formData = new FormData();
         this.cartDatas.forEach((item,index)=>{
           if(item.checked){
-//            console.log(item.id);
-//            console.log(item.quantity);
             formData.append('idx_cart', item.id);
             formData.append('quantity', item.quantity);
-            _this.mko(item)
           }
         });
         _this.$http.put('/api/updateCartItem', formData);
-
+        _this.send();
       },
 
       //兄弟传递数据
-      mko(item){
-//        console.log(item)
-        Bus.$emit('getTarget', item);
+      send(){
+        let shoppingData = [];
+        this.cartDatas.forEach((item,index)=>{
+          if(item.checked){
+            shoppingData.push(item)
+          }
+        });
+        Bus.$emit('getShop', shoppingData);
       },
 
       //点击单选

@@ -14,34 +14,55 @@
     <div class="height-40"></div>
 
     <!--订单list-->
-    <div class="order-status" v-for="item in orderData">
-      <div class="orderStatus-title border-1px_bottom">
-        <span>{{item.insert_date}}</span>
-        <p v-show="item.pay_status==1">已完成</p>
-        <p v-show="item.pay_status==0">待支付</p>
-        <p v-show="item.pay_status==2">已取消</p>
-        <!--<p>已完成</p>-->
-      </div>
-      <div class="orderStatus-content border-1px_bottom" v-for="item in orderData.data">
-        <div class="content-logo">
-          <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="">
+    <div class="order-status" v-for="item in orderData.data">
+      <div v-for="item in item">
+        <div class="orderStatus-title border-1px_bottom">
+          <span>{{item.insert_date}}</span>
+          <p v-show="item.pay_status==1">已完成</p>
+          <p v-show="item.pay_status==0">待支付</p>
+          <p v-show="item.pay_status==2">已取消</p>
+          <!--<p>已完成</p>-->
         </div>
-        <div class="content-info">
-          <p>黄金牧场<span>W8000</span></p>
-          <p>골드 목장<span>X1</span></p>
+        <!--<router-link :to="'/index/orderStatus'+item.id">
+          <div class="orderStatus-content border-1px_bottom">
+            <div class="content-logo">
+              <img width="60" height="60" src="./no404.png" alt="" v-show="item.idx_image==null">
+              <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="" v-show="item.idx_image!==null">
+            </div>
+            <div class="content-info">
+              <p>{{item.chn_title}}<span>W{{item.price}}</span></p>
+              <p>{{item.kor_title}}<span>X{{item.quantity}}</span></p>
+            </div>
+            &lt;!&ndash;<div class="coupon-right-status">&ndash;&gt;
+            &lt;!&ndash;&lt;!&ndash;<router-link to="/Order/orderStatus" v-show="item.state==1">&ndash;&gt;&ndash;&gt;
+            &lt;!&ndash;&lt;!&ndash;<button>再次购买</button>&ndash;&gt;&ndash;&gt;
+            &lt;!&ndash;&lt;!&ndash;</router-link>&ndash;&gt;&ndash;&gt;
+            &lt;!&ndash;</div>&ndash;&gt;
+          </div>
+        </router-link>-->
+        <div class="orderStatus-content border-1px_bottom">
+          <div class="content-logo">
+            <img width="60" height="60" src="./no404.png" alt="" v-show="item.idx_image==null">
+            <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="" v-show="item.idx_image!==null">
+          </div>
+          <div class="content-info">
+            <p>{{item.chn_title}}<span>W{{item.price}}</span></p>
+            <p>{{item.kor_title}}<span>X{{item.quantity}}</span></p>
+          </div>
+          <!--<div class="coupon-right-status">-->
+          <!--&lt;!&ndash;<router-link to="/Order/orderStatus" v-show="item.state==1">&ndash;&gt;-->
+          <!--&lt;!&ndash;<button>再次购买</button>&ndash;&gt;-->
+          <!--&lt;!&ndash;</router-link>&ndash;&gt;-->
+          <!--</div>-->
         </div>
-        <!--<div class="coupon-right-status">-->
-        <!--&lt;!&ndash;<router-link to="/Order/orderStatus" v-show="item.state==1">&ndash;&gt;-->
-        <!--&lt;!&ndash;<button>再次购买</button>&ndash;&gt;-->
-        <!--&lt;!&ndash;</router-link>&ndash;&gt;-->
-        <!--</div>-->
+        <div class="orderStatus-footer border-1px_bottom">
+          <p class="orderStatus-footer-price"><span>w</span><span>{{item.total_price}}</span></p>
+          <p>合计(含运费):</p>
+          <p>共<span>{{item.quantity}}</span>件商品</p>
+        </div>
+        <div class="height8 border-1px_bottom"></div>
       </div>
-      <div class="orderStatus-footer border-1px_bottom">
-        <p class="orderStatus-footer-price"><span>w</span><span>{{item.total_price}}</span></p>
-        <p>合计(含运费):</p>
-        <p>共<span>2</span>件商品</p>
-      </div>
-      <div class="height8 border-1px_bottom"></div>
+
     </div>
 
     <!--没有订单show-->
@@ -181,7 +202,7 @@
           {params:{idx_user:1}}
         ).then((res)=>{
           _this.orderData = res.data;
-          console.log(_this.orderData);
+//          console.log(_this.orderData);
           if(_this.orderData.length===0){
             this.noOrderShow = true;
           }else {

@@ -11,21 +11,21 @@
       </div>
     </div>
 
-    <div class="pay-order border-1px_bottom">
+    <div class="pay-order border-1px_bottom" v-for="item in infoOrder">
       <div class="pay-order-logo">
-        <img width="50" height="50" :src="'http://www.tndnchina.cn/api/getImage?idx='+goodsOrder.idx_image" alt="" v-show="goodsOrder.idx_image!==null">
-        <img width="50" height="50" src="./no404.png" alt="" v-show="goodsOrder.idx_image==null">
+        <img width="50" height="50" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="" v-show="item.idx_image!==null">
+        <img width="50" height="50" src="./no404.png" alt="" v-show="item.idx_image==null">
       </div>
       <div class="pay-order-content">
-        <h1>￥{{goodsOrder.price}}</h1>
+        <h1>￥{{item.price}}</h1>
         <p>
-          <span>{{goodsOrder.chn_title}}</span><span>X{{goodsOrder.quantity}}</span>
+          <span>{{item.chn_title}}</span><span>X{{item.quantity}}</span>
         </p>
       </div>
     </div>
 
     <p class="freight border-1px_top"><span>运费</span><span>￥10.00</span></p>
-    <p class="pay-order-price border-1px_top"><span>合计</span><span>(含运费)</span><span>￥{{goodsOrder.price}}</span></p>
+    <p class="pay-order-price border-1px_top"><span>合计</span><span>(含运费)</span><span>￥{{total_price}}</span></p>
 
     <div class="height-8"></div>
 
@@ -59,7 +59,7 @@
     <!--<router-link to="/pay/payResult">-->
     <!--<router-link to="/pay">-->
       <button class="pay-btn" @click="submitOrder()">
-        <span>确认支付</span><span>￥{{goodsOrder.price}}</span>
+        <span>确认支付</span><span>￥{{total_price}}</span>
       </button>
     <!--</router-link>-->
 
@@ -73,7 +73,7 @@
       data(){
         return{
           infoAddress:[],
-          goodsOrder:[],
+          infoOrder:[],
           weChatData:[],
           total_price:0
         }
@@ -92,9 +92,10 @@
           this.getAddressData();
           //接受_兄弟组件数据
           let _this = this;
-          Bus.$on('getGoods',function(item){
-            _this.goodsOrder = item;
-            console.log(_this.goodsOrder);
+          Bus.$on('getShop',function(item){
+            _this.infoOrder = item;
+            console.log(_this.infoOrder);
+            _this.calTotalMoney();
           });
         })
       },
@@ -111,6 +112,15 @@
           });
         },
 
+        //计算购物车传递总金额
+        calTotalMoney(){
+          let _this = this;
+          this.total_price = 0;
+          this.infoOrder.forEach((item,index)=>{
+            _this.total_price += item.price*item.quantity;
+          });
+        },
+
         //获取订单数据
         /*getOrderData(){
           let _this = this;
@@ -123,6 +133,27 @@
           })
         },*/
 
+        /*//提交订单
+        submitOrder(){
+          let _this = this;
+          var formData = new FormData();
+//          formData.append('idx_user', localStorage.getItem("data").idx_user);
+          formData.append('idx_goods', this.idx_goods);
+          formData.append('quantity', this.quantity);
+          formData.append('total_price', this.total_price);
+          formData.append('chn_title', this.chn_title);
+//          formData.append('openid', localStorage.getItem("data").openid);
+          console.log(this.idx_user);
+//          alert(localStorage.getItem("data").openid);
+//          _this.$http.post('/pay/wechatSign', formData)
+//            .then((res)=>{
+//              _this.weChatData = res.data;
+//              console.log(_this.weChatData);
+//              this.callpay(_this.weChatData);
+//            },(err)=>{
+//              console.log(err);
+//          });
+        },*/
         //提交订单
         submitOrder(){
           let _this = this;

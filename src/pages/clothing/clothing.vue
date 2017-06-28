@@ -24,7 +24,8 @@
         <div class="coupons coupons-components border-1px_bottom clear">
           <router-link :to="'/index/commodityDetail'+item.commodity_id">
             <div class="coupons-logo">
-              <img width="60" height="60" src="./timg-@2x.png" alt="">
+              <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="" v-show="item.idx_image!==null">
+              <img width="60" height="60" src="./no404.png" alt="" v-show="item.idx_image==null">
             </div>
             <div class="coupons-commodity-Introduction">
               <p>commodity_norm</p>

@@ -25,11 +25,12 @@
           <div class="coupons_width">
             <router-link :to="'/index/commodityDetail'+item.id">
               <div class="coupons-logo">
-                <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="">
+                <img width="60" height="60" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image" alt="" v-show="item.idx_image!==null">
+                <img width="60" height="60" src="./no404.png" alt="" v-show="item.idx_image==null">
               </div>
               <div class="coupons-commodity-Introduction">
                 <p>{{item.chn_title}}</p>
-                <p>화장품1</p>
+                <p>{{item.kor_title}}</p>
                 <p>￥{{item.price}}</p>
               </div>
             </router-link>

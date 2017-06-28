@@ -19,39 +19,6 @@
       </div>
       <div class="height-8 border-1px_top border-1px_bottom"></div>
 
-      <!--<div class="index-coupon-love border-1px_bottom border-1px_top">
-        <p>———<span>商品详情</span>———</p>
-      </div>
-      <div class="commodity-detail-form">
-        <p class="border-1px_bottom">
-          <span>销售规格</span><span class="border-1px_right_30">300ml</span>
-        </p>
-        <p class="border-1px_bottom">
-          <span>销售单位</span><span class="border-1px_right_30">瓶</span>
-        </p>
-        <p class="border-1px_bottom">
-          <span>产地</span><span class="border-1px_right_30">韩国首尔</span>
-        </p>
-        <p class="border-1px_bottom">
-          <span>保质期</span><span class="border-1px_right_30">21天</span>
-        </p>
-      </div>
-      <div class="height-8 border-1px_bottom"></div>
-
-      <div class="commodity-description border-1px_bottom">
-        <p>购买须知</p>
-        <ul>
-          <li>
-            <span>{{item.chn_info}}</span>
-          </li>
-          <li>
-            <span>沙发啊v啊我v啊的v啊v阿飞爸爸的吧额沙发啊v啊我v啊的v啊v阿飞爸爸的吧额沙发啊v啊我v啊的v啊v阿飞爸爸的吧额沙发啊v啊我v</span>
-          </li>
-          <li>
-            <span>沙发啊v啊我v啊的v啊v阿飞爸爸的吧额沙发啊v啊我v啊的v啊v阿飞爸爸的吧额沙发啊v啊我v啊的v啊v阿飞爸爸的吧额沙发啊v啊我v</span>
-          </li>
-        </ul>
-      </div>-->
       <div class="commodity-detail-bg-img" v-for="item in commodityDatas.goodsDetailImage">
         <img width="100%" height="240" :src="'http://www.tndnchina.cn/api/getImage?idx='+item.idx_image_file" alt="">
       </div>
@@ -64,7 +31,7 @@
         </router-link>
         <div class="detail-nav-router">
           <p @click="calTotalQuantity(item)">加入购物车</p>
-          <div class="detail-router-pay">
+          <div class="detail-router-pay" @click="shopSubmit(item)">
             <router-link to="/pay">
               立即购买
             </router-link>
@@ -81,6 +48,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import Bus from '../../assets/bus'
+
     export default{
       data(){
         return{
@@ -104,7 +73,7 @@
             {params:{idx_goods:id}}
           ).then((res)=>{
             _this.commodityDatas = res.data;
-            console.log(_this.commodityDatas)
+//            console.log(_this.commodityDatas)
           },(err)=>{
             console.log(err);
           })
@@ -140,7 +109,22 @@
           }else {
             this.isShow = true
           }
-        })
+        }),
+
+        //提交结算
+        shopSubmit(item){
+          let _this = this;
+          var formData = new FormData();
+          var quantity = 1;
+          formData.append('idx_cart', item.id);
+          formData.append('quantity', quantity);
+          _this.$http.put('/api/updateCartItem', formData);
+          _this.send(item);
+        },
+        //兄弟传递数据
+        send(item){
+          Bus.$emit('getGoods', item);
+        }
       }
     }
 

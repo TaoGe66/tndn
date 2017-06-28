@@ -12,6 +12,7 @@ import index from '../pages/index/index'
 import shoppingCart from '../pages/shoppingCart/shoppingCart'
 import me from '../pages/me/me'
 import pay from '../pages/pay/pay'
+import payShopping from '../pages/pay-shopping/pay-shopping'
 import all from '../pages/all/all'
 import commodityDetail from '../pages/commodity-detail/detail'
 import storeDetail from '../pages/store-detail/detail'
@@ -66,7 +67,7 @@ export default new Router({
       path: '/shoppingCart',
       name: 'shoppingCart',
       component: shoppingCart,
-      beforeEnter:(to,form,next)=>{
+      /*beforeEnter:(to,form,next)=>{
         // alert(localStorage.getItem("jsonObj"));
         if(!localStorage.getItem("data")){
          // 第一次进入项目
@@ -79,7 +80,7 @@ export default new Router({
           alert('有，不用登陆');
          return false;
         }
-      }
+      }*/
     },
     {
       path:'/login',
@@ -90,6 +91,11 @@ export default new Router({
       path: '/pay',
       name: 'pay',
       component: pay
+    },
+    {
+      path: '/payShopping',
+      name: 'payShopping',
+      component: payShopping
     },
     {
       path: '/pay/payResult',
