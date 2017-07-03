@@ -25,11 +25,12 @@
     </div>
 
     <p class="freight border-1px_top"><span>运费</span><span>￥10.00</span></p>
-    <p class="pay-order-price border-1px_top"><span>合计</span><span>(含运费)</span><span>￥{{total_price}}</span></p>
+    <p class="pay-order-price border-1px_top"><span>合计</span><span>(含运费)</span><span v-model="total_price">￥{{total_price}}</span></p>
 
     <div class="height-8"></div>
 
-    <router-link to="/pay/selectAddress">
+    <!--<router-link to="/pay/selectAddress">-->
+	<router-link to="/pay">
       <div class="address-detail-component border-1px_top" v-for="info in filterAddress">
         <div class="border-1px_bottom">
           <div class="pay-address-detail-content">
@@ -161,14 +162,15 @@
           var formData = new FormData();
           this.infoOrder.forEach((item)=>{
             formData.append('idx_user', jsonObj.idx_user);
-            formData.append('idx_goods', item.idx_goods);
+            formData.append('idx_goods', item.id);
             formData.append('quantity', item.quantity);
             formData.append('total_price', this.total_price);
             formData.append('chn_title', item.chn_title);
             formData.append('openid', jsonObj.openid);
 //            console.log(jsonObj.idx_user);
-//            console.log(item.idx_goods);
+//            console.log(item.id);
 //            console.log(item.quantity);
+//            console.log(this.total_price);
 //            console.log(item.chn_title);
 //            console.log(jsonObj.openid);
           });

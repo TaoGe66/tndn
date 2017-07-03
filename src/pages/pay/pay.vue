@@ -19,7 +19,7 @@
       <div class="pay-order-content">
         <h1>￥{{goodsOrder.price}}</h1>
         <p>
-          <span>{{goodsOrder.chn_title}}</span><span>X{{goodsOrder.quantity}}</span>
+          <span>{{goodsOrder.chn_title}}</span><span>x{{quantity}}</span>
         </p>
       </div>
     </div>
@@ -29,7 +29,8 @@
 
     <div class="height-8"></div>
 
-    <router-link to="/pay/selectAddress">
+    <!--<router-link to="/pay/selectAddress">-->
+	<router-link to="/pay">   
       <div class="address-detail-component border-1px_top" v-for="info in filterAddress">
         <div class="border-1px_bottom">
           <div class="pay-address-detail-content">
@@ -75,7 +76,8 @@
           infoAddress:[],
           goodsOrder:[],
           weChatData:[],
-          total_price:0
+          total_price:0,
+          quantity:1
         }
       },
       computed:{
@@ -111,36 +113,23 @@
           });
         },
 
-        //获取订单数据
-        /*getOrderData(){
-          let _this = this;
-          _this.$http.get('/api/getUserAddressList',
-            {params: {idx_user:"1"}}
-          ).then((res)=>{
-            _this.infoOrder = res.data;
-          },(err)=>{
-            console.log(err);
-          })
-        },*/
-
         //提交订单
         submitOrder(){
           let _this = this;
           let jsonObj = JSON.parse(localStorage.getItem("data"));
           var formData = new FormData();
-          this.infoOrder.forEach((item)=>{
             formData.append('idx_user', jsonObj.idx_user);
-            formData.append('idx_goods', item.idx_goods);
-            formData.append('quantity', item.quantity);
-            formData.append('total_price', this.total_price);
-            formData.append('chn_title', item.chn_title);
+            formData.append('idx_goods', this.goodsOrder.id);
+            formData.append('quantity', this.quantity);
+            formData.append('total_price', this.goodsOrder.price);
+            formData.append('chn_title', this.goodsOrder.chn_title);
             formData.append('openid', jsonObj.openid);
 //            console.log(jsonObj.idx_user);
-//            console.log(item.idx_goods);
-//            console.log(item.quantity);
-//            console.log(item.chn_title);
+//            console.log(this.goodsOrder.id);
+//            console.log(this.quantity);
+//            console.log(this.goodsOrder.price);
+//            console.log(this.goodsOrder.chn_title);
 //            console.log(jsonObj.openid);
-          });
           _this.$http.post('/pay/wechatSign', formData)
             .then((res)=>{
               _this.weChatData = res.data;
